@@ -10,12 +10,15 @@ let frequencyStats = require('./lib/frequencyStats');
 let readFileSync = require('./lib/readFileSync');
 let sanitize = require('./lib/sanitize');
 let stringToChars = require('./lib/stringToChars');
+let process = require('process');
+let file = process.argv[2];
 
 function textalyze(file) {
   return frequencyStats(stringToChars(sanitize(readFileSync(file))));
 }
 
-console.log(textalyze('./sample_data/great-gatsby.txt'));
+//console.log(textalyze('./sample_data/great-gatsby.txt'));
+console.log(textalyze(file));
 
 // let counts = itemCounts(sampleInput);
 
