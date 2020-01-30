@@ -6,12 +6,13 @@
 
 // Open lib/itemCounts.js to get started on the first iteration.
 let itemCounts = require('./lib/itemCounts');
+let frequencyStats = require('./lib/frequencyStats');
 let readFileSync = require('./lib/readFileSync');
 let sanitize = require('./lib/sanitize');
 let stringToChars = require('./lib/stringToChars');
 
 function textalyze(file) {
-  return itemCounts(stringToChars(sanitize(readFileSync(file))));
+  return frequencyStats(stringToChars(sanitize(readFileSync(file))));
 }
 
 console.log(textalyze('./sample_data/great-gatsby.txt'));
