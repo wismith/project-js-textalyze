@@ -6,15 +6,24 @@
 
 // Open lib/itemCounts.js to get started on the first iteration.
 let itemCounts = require('./lib/itemCounts');
+let readFileSync = require('./lib/readFileSync');
+let sanitize = require('./lib/sanitize');
+let stringToChars = require('./lib/stringToChars');
 
-let sampleInput = ['a', 'a', 'a', 'b', 'b', 'c'];
+function textalyze(file) {
+  return itemCounts(stringToChars(sanitize(readFileSync(file))));
+}
 
-let counts = itemCounts(sampleInput);
+console.log(textalyze('./sample_data/great-gatsby.txt'));
+
+// let counts = itemCounts(sampleInput);
 
 // Object.keys returns an array of keys for the given object.
 // See https://javascript.info/keys-values-entries
+/*
 for (let item of Object.keys(counts)) {
   let count = counts[item];
 
   console.log(`${item}\t${count}`);
 }
+*/
