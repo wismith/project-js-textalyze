@@ -11,6 +11,7 @@ let readFileSync = require('./lib/readFileSync');
 let sanitize = require('./lib/sanitize');
 let stringToChars = require('./lib/stringToChars');
 let process = require('process');
+let helpers = require('./printHelpers');
 let file = process.argv[2];
 
 function textalyze(file) {
@@ -18,7 +19,7 @@ function textalyze(file) {
 }
 
 //console.log(textalyze('./sample_data/great-gatsby.txt'));
-console.log(textalyze(file));
+
 
 // let counts = itemCounts(sampleInput);
 
@@ -31,3 +32,13 @@ for (let item of Object.keys(counts)) {
   console.log(`${item}\t${count}`);
 }
 */
+
+let data = textalyze(file); // "data" will be an object/dictionary
+
+for (let key of Object.keys(data)) {
+  let percent = (100 * data[key]).toFixed(2);
+  helpers.print(key);
+  helpers.print(`  [ ${percent} % ] `);
+  helpers.printCountTimes('=', percent * 5);
+  helpers.printNewLine();
+}
