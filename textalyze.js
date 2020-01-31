@@ -46,7 +46,7 @@ function textalyze() {
     printErrorAndExit('No analysis option given.');
   }
 
-  if (!['words','characters'].includes(option)) {
+  if (!['words', 'characters'].includes(option)) {
     printErrorAndExit('Invalid analysis option.');
   }
 
