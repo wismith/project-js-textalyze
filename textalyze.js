@@ -71,7 +71,7 @@ function textalyze() {
     for (let key of Object.keys(data)) {
       let percent = (100 * data[key]).toFixed(2);
       helpers.print(` ${key} [ ${percent} % ] `);
-      helpers.printCountTimes('=', percent * 5);
+      helpers.printCountTimes('$', percent * 5);
       helpers.printNewLine();
     }
     console.log();
