@@ -70,8 +70,7 @@ function textalyze() {
     console.log(' Presenting character analysis of this book:\n');
     for (let key of Object.keys(data)) {
       let percent = (100 * data[key]).toFixed(2);
-      helpers.print(key);
-      helpers.print(`  [ ${percent} % ] `);
+      helpers.print(` ${key} [ ${percent} % ] `);
       helpers.printCountTimes('=', percent * 5);
       helpers.printNewLine();
     }
