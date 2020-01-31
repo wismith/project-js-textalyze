@@ -11,6 +11,8 @@ let frequencyStats = require('./lib/frequencyStats');
 let readFileSync = require('./lib/readFileSync');
 let sanitize = require('./lib/sanitize');
 let stringToChars = require('./lib/stringToChars');
+let stringToWords = require('./lib/stringToWords');
+let wordStats = require('./lib/wordStats');
 let process = require('process');
 let fs = require('fs');
 let helpers = require('./printHelpers');
@@ -18,7 +20,7 @@ let helpers = require('./printHelpers');
 // Define functions for handling error cases
 function printUsage() {
   console.log('Usage');
-  console.log(' node textalyze.js <fileName>');
+  console.log(' node textalyze.js <fileName> <characters OR words>');
 }
 function printError(errorMsg) {
   console.log(`Error: ${errorMsg}`);
@@ -30,17 +32,38 @@ function printErrorAndExit(errorMsg) {
 }
 function textalyze() {
   let file = process.argv[2];
+  let option = process.argv[3];
 
   // Implement error-handling functions
   if (file === undefined) {
-    printErrorAndExit('Error: No file given to analyze.');
+    printErrorAndExit('No file given to analyze.');
   }
   if (!fs.existsSync(file)) {
     printErrorAndExit(`No such file ${file}`);
   }
 
+  if (option === undefined) {
+    printErrorAndExit('No analysis option given.');
+  }
+
   // Return resulting statistics
-  return frequencyStats(stringToChars(sanitize(readFileSync(file))));
+  if (option === 'words') {
+    let data = wordStats(stringToWords(sanitize(readFileSync(file))));
+    for (let key of Object.keys(data)) {
+      helpers.print(`The word '${key}' was used ${data[key]} times.`);
+      helpers.printNewLine();
+    }
+  }
+  if (option === 'characters') {
+    let data = frequencyStats(stringToChars(sanitize(readFileSync(file))));
+    for (let key of Object.keys(data)) {
+      let percent = (100 * data[key]).toFixed(2);
+      helpers.print(key);
+      helpers.print(`  [ ${percent} % ] `);
+      helpers.printCountTimes('=', percent * 5);
+      helpers.printNewLine();
+    }
+  }
 }
 
 // console.log(textalyze('./sample_data/great-gatsby.txt'));
@@ -56,13 +79,4 @@ for (let item of Object.keys(counts)) {
   console.log(`${item}\t${count}`);
 }
 */
-
-let data = textalyze(); // "data" will be an object/dictionary
-
-for (let key of Object.keys(data)) {
-  let percent = (100 * data[key]).toFixed(2);
-  helpers.print(key);
-  helpers.print(`  [ ${percent} % ] `);
-  helpers.printCountTimes('=', percent * 5);
-  helpers.printNewLine();
-}
+textalyze();
