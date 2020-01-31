@@ -55,11 +55,11 @@ function textalyze() {
     let data = wordAnalysis.wordStats(stringToWords(sanitize(readFileSync(file))));
     let wordsData = wordAnalysis.wordSummary(stringToWords(sanitize(readFileSync(file))));
     console.log();
-    console.log(`This book has ${wordsData[0]} words total.`);
-    console.log(`It used ${wordsData[1]} DIFFERENT words.`);
+    console.log(` This book has ${wordsData[0]} words total.`);
+    console.log(` It used ${wordsData[1]} DIFFERENT words.`);
     console.log();
     for (let key of Object.keys(data)) {
-      helpers.print(`The word '${key}' was used ${data[key]} times.`);
+      helpers.print(` The word '${key}' was used ${data[key]} times.`);
       helpers.printNewLine();
     }
     console.log();
