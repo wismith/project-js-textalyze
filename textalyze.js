@@ -19,7 +19,7 @@ let helpers = require('./printHelpers');
 
 // Define functions for handling error cases
 function printUsage() {
-  console.log('Usage');
+  console.log('Usage:');
   console.log(' node textalyze.js <fileName> <characters OR words>');
 }
 function printError(errorMsg) {
@@ -46,6 +46,10 @@ function textalyze() {
     printErrorAndExit('No analysis option given.');
   }
 
+  if (!['words','characters'].includes(option)) {
+    printErrorAndExit('Invalid analysis option.');
+  }
+
   // Return resulting statistics
   if (option === 'words') {
     let data = wordAnalysis.wordStats(stringToWords(sanitize(readFileSync(file))));
@@ -62,6 +66,8 @@ function textalyze() {
   }
   if (option === 'characters') {
     let data = frequencyStats(stringToChars(sanitize(readFileSync(file))));
+    console.log();
+    console.log(' Presenting character analysis of this book:\n');
     for (let key of Object.keys(data)) {
       let percent = (100 * data[key]).toFixed(2);
       helpers.print(key);
@@ -69,6 +75,7 @@ function textalyze() {
       helpers.printCountTimes('=', percent * 5);
       helpers.printNewLine();
     }
+    console.log();
   }
 }
 
