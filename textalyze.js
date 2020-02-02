@@ -68,10 +68,10 @@ function textalyze() {
     let data = frequencyStats(stringToChars(sanitize(readFileSync(file))));
     console.log();
     console.log(' Presenting character analysis of this book:\n');
-    for (let key of Object.keys(data)) {
+    for (let key of Object.keys(data).sort((a, b) => data[b] - data[a])) {
       let percent = (100 * data[key]).toFixed(2);
       helpers.print(` ${key} [ ${percent} % ] `);
-      helpers.printCountTimes('$', percent * 5);
+      helpers.printCountTimes('$', percent * 3);
       helpers.printNewLine();
     }
     console.log();
